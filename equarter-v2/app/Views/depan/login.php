@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>e-Quarter 2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- HEADER (LOGO - FULL WIDTH PUTIH) -->
+<div class="bg-white py-3 shadow-sm">
+    <div class="container text-center">
+        <img src="<?= base_url('assets/images/logo_kpm.jpg') ?>" alt="Logo KPM" height="50" class="me-3">
+        <img src="<?= base_url('assets/images/logo_kvsas.png') ?>" alt="Logo KVSAS" height="50">
+    </div>
+</div>
+
+<!-- TAJUK SISTEM -->
+<div class="container text-center my-4">
+    <h3 class="fw-bold mt-5">Sistem Pengurusan Kewangan e-Quarter</h3>
+    <p class="text-muted">Sila log masuk untuk meneruskan</p>
+</div>
+
+<!-- CONTENT -->
+<div class="container">
+    <div class="row shadow rounded overflow-hidden w-75 mx-auto">
+
+        <!-- LEFT SIDE -->
+        <div class="col-md-6 bg-primary text-white p-5 d-none d-md-block">
+            <h4 class="fw-bold">e-Quarter 2.0</h4>
+            <p class="mt-3">
+                Sistem e-Quarter 2.0 merupakan inovasi sistem pengurusan kewangan yang dibangunkan secara dalam talian
+                bagi merekod, mengemaskini dan memantau data perbelanjaan khususnya bagi Peruntukan Dana Bantuan Geran
+                Per Kapita. Sistem ini juga dapat menyediakan laporan perbelanjaan wang kerajaan mengikut sukuan bagi
+                tahun.
+            </p>
+        </div>
+
+        <!-- RIGHT SIDE (LOGIN) -->
+        <div class="col-md-6 bg-white p-5">
+            <form method="post" action="<?= base_url('login') ?>">
+                <div class="mb-3">
+                    <label for="username" class="form-label fw-bold">ID Pengguna</label>
+                    <input type="text" name="username" id="username" class="form-control" required autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-bold">Kata Laluan</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        Log Masuk
+                    </button>
+                </div>
+            </form>
+
+            <p class="text-center mt-3 text-muted small">
+                Akses terhad untuk pengguna berdaftar sahaja
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="footer mt-auto py-3 bg-white border-top fixed-bottom">
+    <div class="container text-center">
+        <span class="text-muted small">
+            &copy; <?= (date('Y') == '2026') ? '2026' : '2026 - ' . date('Y') ?>
+            Hakcipta Terpelihara Kolej Vokasional Sultan Abdul Samad
+        </span>
+    </div>
+</footer>
+
+</body>
+</html>

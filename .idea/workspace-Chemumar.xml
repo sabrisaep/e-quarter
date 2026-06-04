@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2e612d62-b0d5-4ea4-87d0-8edf681e0b47" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/equarter-v2/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="111" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="PHP File" />
+      </list>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0168629411953816" />
+      <entry key="MS500" value="1.4419637655318356" />
+      <entry key="S2" value="1.8153548639033543" />
+      <entry key="S5" value="1.9215919371140482" />
+      <entry key="S10" value="1.9599958005710483" />
+      <entry key="S30" value="1.9864833913019815" />
+      <entry key="S60" value="1.9932187026541444" />
+      <entry key="M2" value="1.9966035835045668" />
+      <entry key="M5" value="1.9986400470883574" />
+      <entry key="M10" value="1.999451054039406" />
+      <entry key="M15" value="2.00823667559711" />
+      <entry key="M30" value="2.579765558797511" />
+      <entry key="H1" value="6.751637873303682" />
+      <entry key="H2" value="15.610121786798935" />
+      <entry key="H4" value="25.037752615276318" />
+      <entry key="D1" value="37.723771669620845" />
+      <entry key="W1" value="40.51417753459224" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="2.61460788E-315" />
+      <entry key="S30" value="1.997309619103696E-105" />
+      <entry key="S60" value="6.239447918137848E-53" />
+      <entry key="M2" value="1.1539156903563362E-26" />
+      <entry key="M5" value="8.837032684183905E-11" />
+      <entry key="M10" value="2.130103292697161E-5" />
+      <entry key="M15" value="0.0013721775801996548" />
+      <entry key="M30" value="0.08996799137699409" />
+      <entry key="H1" value="0.7332017293917735" />
+      <entry key="H2" value="2.0963675671055237" />
+      <entry key="H4" value="3.546132114239224" />
+      <entry key="D1" value="5.496391799511807" />
+      <entry key="W1" value="5.925322406952075" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.8845353300293737" />
+      <entry key="MS500" value="1.398381801286758" />
+      <entry key="S2" value="1.8008532730466438" />
+      <entry key="S5" value="1.9153801223697815" />
+      <entry key="S10" value="1.9568155171848256" />
+      <entry key="S30" value="1.9854061914827383" />
+      <entry key="S60" value="1.9926779275601576" />
+      <entry key="M2" value="1.996332649349797" />
+      <entry key="M5" value="1.9985315419655958" />
+      <entry key="M10" value="1.9994178652839283" />
+      <entry key="M15" value="2.009563807577984" />
+      <entry key="M30" value="2.6694384189870504" />
+      <entry key="H1" value="7.483729246353777" />
+      <entry key="H2" value="17.70493004800953" />
+      <entry key="H4" value="28.582575744096737" />
+      <entry key="D1" value="43.219827306455116" />
+      <entry key="W1" value="46.4394482216948" />
+    </decayedShown>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\laragon\bin\php\php-8.2.17-Win32-vs16-x64\php.exe">
+    <include_path>
+      <path value="$PROJECT_DIR$/equarter-v1/vendor/codeigniter4/framework" />
+      <path value="$PROJECT_DIR$/equarter-v1/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/equarter-v1/vendor/composer" />
+      <path value="$PROJECT_DIR$/equarter-v1/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/equarter-v2/vendor/codeigniter4/framework" />
+      <path value="$PROJECT_DIR$/equarter-v2/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/equarter-v2/vendor/composer" />
+      <path value="$PROJECT_DIR$/equarter-v2/vendor/psr/log" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3ECsFvpweRaV3ErqmpCzcQXt6Vo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "E:/OneDrive - Politeknik Tuanku Syed Sirajuddin (PTSS)/ruangprojek.com/e-quarter",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "php.override.implement.member.chooser.php.doc": "NONE",
+    "settings.editor.selected.configurable": "Errors",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="ComposerRunConfigurationType" factoryName="Composer Script">
+      <option name="pathToComposerJson" value="$PROJECT_DIR$/equarter-v1/composer.json" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-PS-261.24374.185" />
+        <option value="bundled-php-predefined-a98d8de5180a-6bbb74dbab74-com.jetbrains.php.sharedIndexes-PS-261.24374.185" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2e612d62-b0d5-4ea4-87d0-8edf681e0b47" name="Changes" comment="" />
+      <created>1779693785888</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779693785888</updated>
+      <workItem from="1779693786921" duration="4131000" />
+      <workItem from="1779753219870" duration="329000" />
+      <workItem from="1779753728660" duration="1470000" />
+      <workItem from="1779755211172" duration="5011000" />
+      <workItem from="1780452249535" duration="1212000" />
+      <workItem from="1780457383660" duration="1769000" />
+      <workItem from="1780483429097" duration="5260000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -33,19 +33,22 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
             <ul class="navbar-nav gap-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ketua Jabatan</a>
+                    <a class="nav-link" href="<?= base_url('admin/') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ketua Unit</a>
+                    <a class="nav-link" href="<?= base_url('admin/kerani') ?>">Kerani</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ketua Program</a>
+                    <a class="nav-link" href="<?= base_url('admin/ketua') ?>">Ketua</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tetapan</a>
+                    <a class="nav-link" href="<?= base_url('admin/pengurusan') ?>">Pengurusan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-danger" href="#">Log Keluar</a>
+                    <a class="nav-link" href="<?= base_url('admin/kata_laluan') ?>">Kata Laluan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="<?= base_url('logout') ?>">Log Keluar</a>
                 </li>
             </ul>
         </div>
@@ -85,10 +88,10 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-            var toastList = toastElList.map(function (toastEl) {
-                return new bootstrap.Toast(toastEl).show()
-            })
+            let toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.map(function (toastEl) {
+                new bootstrap.Toast(toastEl).show()
+            });
         });
     </script>
 <?php endif; ?>

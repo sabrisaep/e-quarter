@@ -12,7 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>e-Quarter 2.0</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -75,9 +76,12 @@
 
 <?php if (isset($mesej) && $mesej): ?>
     <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
-        <div id="liveToast" class="toast show border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header bg-primary text-white">
-                <strong class="me-auto"><i class="fas fa-info-circle me-2"></i><?= esc($mesej['tajuk']) ?></strong>
+        <div id="liveToast" class="toast show border-0 shadow-lg" role="alert" aria-live="assertive"
+             aria-atomic="true">
+            <div class="toast-header <?= esc($mesej['warna']) ?> text-white">
+                <strong class="me-auto">
+                    <i class="fas fa-info-circle me-2"></i><?= esc($mesej['tajuk']) ?>
+                </strong>
                 <small class="text-white-50"><?= date('h:i a') ?></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>

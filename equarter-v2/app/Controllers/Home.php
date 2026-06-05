@@ -9,7 +9,10 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('depan/login');
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+        ];
+        return view('depan/login', $data);
     }
 
     public function login(): RedirectResponse
@@ -29,6 +32,16 @@ class Home extends BaseController
             return redirect()->to('admin');
         }
 
-        return redirect()->to('/')->with('error', 'Username atau password salah.');
+        return redirect()->to('/')->with('mesej', [
+            'tajuk' => 'Login Gagal',
+            'warna' => 'bg-danger',
+            'isi' => 'ID pengguna atau kata laluan salah.',
+        ]);
+    }
+
+    public function logout(): RedirectResponse
+    {
+        session()->destroy();
+        return redirect()->to('/');
     }
 }

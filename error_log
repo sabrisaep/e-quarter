@@ -1,0 +1,13 @@
+[05-Jun-2026 00:57:48 UTC] PHP Warning:  require(/home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php): Failed to open stream: No such file or directory in /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/autoload_real.php on line 41
+[05-Jun-2026 00:57:48 UTC] PHP Warning:  require(/home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php): Failed to open stream: No such file or directory in /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/autoload_real.php on line 41
+[05-Jun-2026 00:57:48 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/autoload_real.php(45): {closure}()
+#1 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/autoload.php(22): ComposerAutoloaderInitf5cce40800fa5dae1504b9364f585e6a::getLoader()
+#2 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/codeigniter4/framework/system/Autoloader/Autoloader.php(159): include('/home/sabrisae/...')
+#3 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/codeigniter4/framework/system/Autoloader/Autoloader.php(144): CodeIgniter\Autoloader\Autoloader->loadComposerAutoloader()
+#4 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/codeigniter4/framework/system/Boot.php(323): CodeIgniter\Autoloader\Autoloader->initialize()
+#5 /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/codeigniter4/framework/system/Boot.php(55): CodeIgniter\Boot::loadAutoloader()
+#6 /home/sabrisae/public_html/ruangprojek/e-quarter/index.php(59): CodeIgniter\Boot::bootWeb()
+#7 {main}
+  thrown in /home/sabrisae/public_html/ruangprojek/e-quarter/equarter-v2/vendor/composer/autoload_real.php on line 41

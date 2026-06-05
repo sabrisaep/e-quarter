@@ -67,8 +67,8 @@
 <footer class="footer mt-auto py-3 bg-white border-top fixed-bottom">
     <div class="container text-center">
         <span class="text-muted small">
-            &copy; <?= (date('Y') == '2026') ? '2026' : '2026 - ' . date('Y') ?>
-            Hakcipta Terpelihara Kolej Vokasional Sultan Abdul Samad
+             &copy; <?= date('Y') == '2026' ? '2026' : '2026 - ' . date('Y') ?>
+            e-Quarter 2.0. Kolej Vokasional Sultan Abdul Samad. Hak Cipta Terpelihara.
         </span>
     </div>
 </footer>
@@ -76,5 +76,32 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+<?php if (isset($mesej) && $mesej): ?>
+    <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+        <div id="liveToast" class="toast show border-0 shadow-lg" role="alert" aria-live="assertive"
+             aria-atomic="true">
+            <div class="toast-header <?= esc($mesej['warna']) ?> text-white">
+                <strong class="me-auto">
+                    <i class="fas fa-info-circle me-2"></i><?= esc($mesej['tajuk']) ?>
+                </strong>
+                <small class="text-white"><?= date('h:i a') ?></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <?= esc($mesej['isi']) ?>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.map(function (toastEl) {
+                new bootstrap.Toast(toastEl).show()
+            });
+        });
+    </script>
+<?php endif; ?>
+
 </body>
 </html>

@@ -6,7 +6,7 @@
  */
 ?>
 
-<h1 class="text-primary">Dashboard</h1>
+<h1 class="text-primary">Dashboard Pentadbir Sistem</h1>
 
 
 

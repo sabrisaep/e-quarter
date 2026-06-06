@@ -10,6 +10,7 @@
 <body>
 <h3>Developer Tools</h3>
 
+<em>Senarai function PHP yang tidak diaktifkan dalam sistem</em>
 <h4>
     Disable function:
     <?php

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateKeraniTable extends Migration
+class CreatePenggunaTable extends Migration
 {
     public function up(): void
     {
@@ -30,6 +30,10 @@ class CreateKeraniTable extends Migration
             'password' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
+            ],
+            'role' => [
+                'type'      => 'ENUM',
+                'constraint'=> ['kerani', 'ketua', 'pengurusan'],
             ],
             'status' => [
                 'type'       => 'ENUM',
@@ -58,11 +62,11 @@ class CreateKeraniTable extends Migration
         $this->forge->addUniqueKey('no_kp');
 
         // Bina jadual
-        $this->forge->createTable('kerani');
+        $this->forge->createTable('pengguna');
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('kerani');
+        $this->forge->dropTable('pengguna');
     }
 }

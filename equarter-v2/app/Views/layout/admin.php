@@ -72,7 +72,45 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-<?= $this->renderSection('script') ?>
+<script>
+function editKerani(data) {
+    document.getElementById('formTitle').innerText = 'Kemaskini Kerani';
+    document.getElementById('keraniId').value = data.id;
+    document.getElementById('nama_penuh').value = data.nama_penuh;
+    document.getElementById('no_kp').value = data.no_kp;
+    document.getElementById('email').value = data.email;
+    document.getElementById('submitBtn').innerText = 'Kemaskini';
+    document.getElementById('cancelBtn').style.display = 'inline-block';
+}
+
+function resetForm() {
+    document.getElementById('keraniForm').reset();
+    document.getElementById('keraniId').value = '';
+    document.getElementById('formTitle').innerText = 'Daftar Kerani Baru';
+    document.getElementById('submitBtn').innerText = 'Simpan';
+    document.getElementById('cancelBtn').style.display = 'none';
+}
+
+function confirmDelete(id) {
+    document.getElementById('deleteForm').action = '<?= base_url('admin/kerani_padam/') ?>' + id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+}
+
+function confirmReset(id) {
+    document.getElementById('resetForm').action = '<?= base_url('admin/kerani_reset/') ?>' + id;
+    new bootstrap.Modal(document.getElementById('resetModal')).show();
+}
+
+function confirmSekat(id) {
+    document.getElementById('sekatForm').action = '<?= base_url('admin/kerani_sekat/') ?>' + id;
+    new bootstrap.Modal(document.getElementById('sekatModal')).show();
+}
+
+function confirmAktif(id) {
+    document.getElementById('aktifForm').action = '<?= base_url('admin/kerani_aktifkan/') ?>' + id;
+    new bootstrap.Modal(document.getElementById('aktifModal')).show();
+}
+</script>
 
 <?php if (isset($mesej) && $mesej): ?>
     <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
@@ -82,7 +120,7 @@
                 <strong class="me-auto">
                     <i class="fas fa-info-circle me-2"></i><?= esc($mesej['tajuk']) ?>
                 </strong>
-                <small class="text-white-50"><?= date('h:i a') ?></small>
+                <small class="text-white"><?= date('h:i a') ?></small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
@@ -99,5 +137,93 @@
         });
     </script>
 <?php endif; ?>
+
+<!-- Modal Padam -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="post">
+                <?= csrf_field() ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Sahkan Padam</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Adakah anda pasti ingin memadam data kerani ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Padam</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Reset -->
+<div class="modal fade" id="resetModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="resetForm" method="post">
+                <?= csrf_field() ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Sahkan Reset Kata Laluan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Adakah anda pasti ingin set semula kata laluan kerani ini kepada nombor kad pengenalannya?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-info">Reset Kata Laluan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Sekat -->
+<div class="modal fade" id="sekatModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="sekatForm" method="post">
+                <?= csrf_field() ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Sahkan Sekatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Adakah anda pasti ingin menyekat capaian akaun kerani ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-secondary">Sekat Akaun</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Aktifkan -->
+<div class="modal fade" id="aktifModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="aktifForm" method="post">
+                <?= csrf_field() ?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Sahkan Aktifkan Semula</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Adakah anda pasti ingin mengaktifkan semula akaun kerani ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Aktifkan Akaun</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

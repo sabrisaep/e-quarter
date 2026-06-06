@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="no_kp">No. Kad Pengenalan</label>
-                    <input type="text" name="no_kp" id="no_kp" class="form-control" required>
+                    <input type="text" name="no_kp" id="no_kp" class="form-control" required pattern="\d{12}" maxlength="12" title="Sila masukkan 12 digit nombor kad pengenalan tanpa tanda -">
                 </div>
                 <div class="col-md-2 mb-3 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary" id="submitBtn">Simpan</button>

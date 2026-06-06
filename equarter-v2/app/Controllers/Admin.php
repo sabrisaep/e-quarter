@@ -65,11 +65,21 @@ class Admin extends BaseController
             'status'     => 'aktif'
         ];
 
-        if ($id) {
-            $penggunaModel->update($id, $data);
-        } else {
+        // Jika tiada ID, ini adalah pendaftaran baru, tetapkan kata laluan
+        if (!$id) {
             $data['password'] = $this->request->getPost('no_kp');
-            $penggunaModel->insert($data);
+        }
+
+        // Gunakan save() untuk mengendalikan insert/update secara automatik
+        // atau semak hasil pulangan insert/update
+        $simpan = $id ? $penggunaModel->update($id, $data) : $penggunaModel->insert($data);
+
+        if (!$simpan) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi'   => 'Gagal menyimpan data. Sila pastikan Email dan No. KP belum didaftarkan.',
+            ])->with('errors', $penggunaModel->errors());
         }
 
         return redirect()->to(base_url('admin/kerani'))->with('mesej', [

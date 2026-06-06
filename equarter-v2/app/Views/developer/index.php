@@ -10,6 +10,13 @@
 <body>
 <h3>Developer Tools</h3>
 
+<h4>
+    Disable function:
+    <?php
+    echo ini_get('disable_functions');
+    ?>
+</h4>
+
 <form action="<?= base_url('developer') ?>" method="post">
     <button name="git_pull">Git Pull</button>
     <button name="migrate">Run Migration</button>

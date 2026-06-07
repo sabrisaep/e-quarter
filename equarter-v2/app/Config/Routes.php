@@ -12,12 +12,13 @@ $routes->get('/logout', [Home::class, 'logout']);
 $routes->group('admin', ['filter' => 'adminauth'], function ($routes) {
     $routes->get('/', [Admin::class, 'index']);
 
-    $routes->get('kerani', [Admin::class, 'kerani']);
-    $routes->post('kerani_simpan', [Admin::class, 'kerani_simpan']);
-    $routes->post('kerani_padam/(:num)', [Admin::class, 'kerani_padam']);
-    $routes->post('kerani_reset/(:num)', [Admin::class, 'kerani_reset']);
-    $routes->post('kerani_sekat/(:num)', [Admin::class, 'kerani_sekat']);
-    $routes->post('kerani_aktifkan/(:num)', [Admin::class, 'kerani_aktifkan']);
+    // Generic user management routes
+    $routes->get('manage/(:segment)', [Admin::class, 'manageUsers']);
+    $routes->post('user_simpan/(:segment)', [Admin::class, 'user_simpan']);
+    $routes->post('user_padam/(:segment)/(:num)', [Admin::class, 'user_padam']);
+    $routes->post('user_reset/(:segment)/(:num)', [Admin::class, 'user_reset']);
+    $routes->post('user_sekat/(:segment)/(:num)', [Admin::class, 'user_sekat']);
+    $routes->post('user_aktifkan/(:segment)/(:num)', [Admin::class, 'user_aktifkan']);
 
-
+    // perlu tambah pengurusan senarai jabatan & ketua
 });

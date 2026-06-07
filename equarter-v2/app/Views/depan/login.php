@@ -64,6 +64,66 @@
     </div>
 </div>
 
+<div class="container my-5">
+    <div class="card border-3 border-primary shadow-sm rounded mx-auto">
+        <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0 fw-bold text-primary">
+                <i class="fas fa-chart-line me-2"></i>Perkembangan Pembangunan Sistem e-Quarter
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="card h-100 border-primary shadow-sm">
+                        <div class="card-header fw-bold bg-primary text-white">Pentadbir Sistem</div>
+                        <div class="card-body">
+                            <p class="card-text">Menguruskan senarai kerani kewangan, ketua program / jabatan & pihak pengurusan.</p>
+                        </div>
+                        <div class="card-footer">
+                            Pembangunan sedang berjalan
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-secondary">
+                        <div class="card-header fw-bold">Kerani Kewangan</div>
+                        <div class="card-body">
+                            <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Pembangunan belum bermula
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-secondary">
+                        <div class="card-header fw-bold">Ketua Program / Jabatan</div>
+                        <div class="card-body">
+                            <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Pembangunan belum bermula
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-secondary">
+                        <div class="card-header fw-bold">Pihak Pengurusan</div>
+                        <div class="card-body">
+                            <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
+                        </div>
+                        <div class="card-footer text-muted small">
+                            Pembangunan belum bermula
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="my-3 py-3"></div>
+
 <footer class="footer mt-auto py-3 bg-white border-top fixed-bottom">
     <div class="container text-center">
         <span class="text-muted small">

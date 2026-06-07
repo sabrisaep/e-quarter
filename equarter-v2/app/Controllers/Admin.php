@@ -8,6 +8,17 @@ use ReflectionException;
 
 class Admin extends BaseController
 {
+    // Helper to get role title
+    private function getRoleTitle(string $role): string
+    {
+        $roleTitles = [
+            'kerani' => 'Kerani Kewangan',
+            'ketua' => 'Ketua Program / Jabatan',
+            'pengurusan' => 'Pihak Pengurusan',
+        ];
+        return $roleTitles[$role] ?? ucfirst($role);
+    }
+
     public function index(): string
     {
         $penggunaModel = new PenggunaModel();
@@ -32,27 +43,29 @@ class Admin extends BaseController
         return view('admin/dashboard', $data);
     }
 
-    public function kerani(): string
+    public function manageUsers(string $role): string
     {
-        $keraniModel = new PenggunaModel();
+        $penggunaModel = new PenggunaModel();
 
-        $syaratAktif = ['role' => 'kerani', 'status' => 'aktif'];
-        $syaratDisekat = ['role' => 'kerani', 'status' => 'sekat'];
-        $keraniAktif = $keraniModel->asObject()->where($syaratAktif)->orderBy('nama_penuh', 'ASC')->findAll();
-        $keraniDisekat = $keraniModel->asObject()->where($syaratDisekat)->orderBy('nama_penuh', 'ASC')->findAll();
+        $syaratAktif = ['role' => $role, 'status' => 'aktif'];
+        $syaratDisekat = ['role' => $role, 'status' => 'sekat'];
+        $activeUsers = $penggunaModel->asObject()->where($syaratAktif)->orderBy('nama_penuh', 'ASC')->findAll();
+        $blockedUsers = $penggunaModel->asObject()->where($syaratDisekat)->orderBy('nama_penuh', 'ASC')->findAll();
 
         $data = [
             'mesej' => session()->getFlashdata('mesej'),
-            'keraniAktif' => $keraniAktif,
-            'keraniDisekat' => $keraniDisekat,
+            'role' => $role,
+            'roleTitle' => $this->getRoleTitle($role),
+            'activeUsers' => $activeUsers,
+            'blockedUsers' => $blockedUsers,
         ];
-        return view('admin/kerani', $data);
+        return view('admin/user_management', $data);
     }
 
     /**
      * @throws ReflectionException
      */
-    public function kerani_simpan(): RedirectResponse
+    public function user_simpan(string $role): RedirectResponse
     {
         $penggunaModel = new PenggunaModel();
 
@@ -61,7 +74,7 @@ class Admin extends BaseController
             'nama_penuh' => $this->request->getPost('nama_penuh'),
             'email'      => $this->request->getPost('email'),
             'no_kp'      => $this->request->getPost('no_kp'),
-            'role'       => 'kerani',
+            'role'       => $role,
             'status'     => 'aktif'
         ];
 
@@ -70,8 +83,6 @@ class Admin extends BaseController
             $data['password'] = $this->request->getPost('no_kp');
         }
 
-        // Gunakan save() untuk mengendalikan insert/update secara automatik
-        // atau semak hasil pulangan insert/update
         $simpan = $id ? $penggunaModel->update($id, $data) : $penggunaModel->insert($data);
 
         if (!$simpan) {
@@ -82,29 +93,29 @@ class Admin extends BaseController
             ])->with('errors', $penggunaModel->errors());
         }
 
-        return redirect()->to(base_url('admin/kerani'))->with('mesej', [
-            'tajuk' => 'Simpan Data Kerani',
+        return redirect()->to(base_url('admin/manage/' . $role))->with('mesej', [
+            'tajuk' => 'Simpan Data ' . $this->getRoleTitle($role),
             'warna' => 'bg-success',
-            'isi' => 'Data kerani berhasil disimpan.',
+            'isi' => 'Data ' . strtolower($this->getRoleTitle($role)) . ' berhasil disimpan.',
         ]);
     }
 
-    public function kerani_padam(int $id): RedirectResponse
+    public function user_padam(string $role, int $id): RedirectResponse
     {
         $penggunaModel = new PenggunaModel();
         $penggunaModel->delete($id);
 
-        return redirect()->to(base_url('admin/kerani'))->with('mesej', [
-            'tajuk' => 'Padam Data Kerani',
+        return redirect()->to(base_url('admin/manage/' . $role))->with('mesej', [
+            'tajuk' => 'Padam Data ' . $this->getRoleTitle($role),
             'warna' => 'bg-danger',
-            'isi' => 'Data kerani berhasil dipadam.',
+            'isi' => 'Data ' . strtolower($this->getRoleTitle($role)) . ' berhasil dipadam.',
         ]);
     }
 
     /**
      * @throws ReflectionException
      */
-    public function kerani_reset(int $id): RedirectResponse
+    public function user_reset(string $role, int $id): RedirectResponse
     {
         $penggunaModel = new PenggunaModel();
         $pengguna = $penggunaModel->find($id);
@@ -115,40 +126,40 @@ class Admin extends BaseController
             ]);
         }
 
-        return redirect()->to(base_url('admin/kerani'))->with('mesej', [
+        return redirect()->to(base_url('admin/manage/' . $role))->with('mesej', [
             'tajuk' => 'Reset Kata Laluan',
             'warna' => 'bg-info',
-            'isi' => 'Kata laluan kerani telah diresetkan kepada No. KP.',
+            'isi' => 'Kata laluan ' . strtolower($this->getRoleTitle($role)) . ' telah diresetkan kepada No. KP.',
         ]);
     }
 
     /**
      * @throws ReflectionException
      */
-    public function kerani_sekat(int $id): RedirectResponse
+    public function user_sekat(string $role, int $id): RedirectResponse
     {
         $penggunaModel = new PenggunaModel();
         $penggunaModel->update($id, ['status' => 'sekat']);
 
-        return redirect()->to(base_url('admin/kerani'))->with('mesej', [
-            'tajuk' => 'Sekat Akaun Kerani',
+        return redirect()->to(base_url('admin/manage/' . $role))->with('mesej', [
+            'tajuk' => 'Sekat Akaun ' . $this->getRoleTitle($role),
             'warna' => 'bg-warning',
-            'isi' => 'Akaun kerani telah disekat.',
+            'isi' => 'Akaun ' . strtolower($this->getRoleTitle($role)) . ' telah disekat.',
         ]);
     }
 
     /**
      * @throws ReflectionException
      */
-    public function kerani_aktifkan(int $id): RedirectResponse
+    public function user_aktifkan(string $role, int $id): RedirectResponse
     {
         $penggunaModel = new PenggunaModel();
         $penggunaModel->update($id, ['status' => 'aktif']);
 
-        return redirect()->to(base_url('admin/kerani'))->with('mesej', [
-            'tajuk' => 'Aktifkan Akaun Kerani',
+        return redirect()->to(base_url('admin/manage/' . $role))->with('mesej', [
+            'tajuk' => 'Aktifkan Akaun ' . $this->getRoleTitle($role),
             'warna' => 'bg-success',
-            'isi' => 'Akaun kerani telah diaktifkan semula.',
+            'isi' => 'Akaun ' . strtolower($this->getRoleTitle($role)) . ' telah diaktifkan semula.',
         ]);
     }
 }

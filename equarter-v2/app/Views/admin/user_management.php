@@ -2,18 +2,20 @@
 <?= $this->section('content'); ?>
 <?php
 /**
- * @var object $keraniAktif
- * @var object $keraniDisekat
+ * @var string $role
+ * @var string $roleTitle
+ * @var object[] $activeUsers
+ * @var object[] $blockedUsers
  */
 ?>
-<h1 class="text-primary">Kerani Kewangan</h1>
+<h1 class="text-primary"><?= esc($roleTitle) ?></h1>
 
 <div class="card mb-4">
     <div class="card-header">
-        <h5 id="formTitle" class="mb-0">Daftar Kerani Baru</h5>
+        <h5 id="formTitle" class="mb-0">Daftar <?= esc($roleTitle) ?> Baru</h5>
     </div>
     <div class="card-body">
-        <form id="keraniForm" action="<?= base_url('admin/kerani_simpan') ?>" method="post">
+        <form id="keraniForm" action="<?= base_url('admin/user_simpan/' . $role) ?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="id" id="keraniId">
             <div class="row">
@@ -31,7 +33,7 @@
                 </div>
                 <div class="col-md-2 mb-3 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary" id="submitBtn">Simpan</button>
-                    <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;" onclick="resetForm()">Batal</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;" onclick="resetForm('<?= esc($role) ?>')">Batal</button>
                 </div>
             </div>
         </form>
@@ -40,7 +42,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h5 class="mb-0">Senarai Kerani Aktif</h5>
+        <h5 class="mb-0">Senarai <?= esc($roleTitle) ?> Aktif</h5>
     </div>
     <div class="card-body">
         <table class="table table-bordered table-striped">
@@ -54,20 +56,22 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if(!empty($keraniAktif)): foreach($keraniAktif as $index => $k): ?>
+                <?php if(!empty($activeUsers)): foreach($activeUsers as $index => $user): ?>
                 <tr>
                     <td><?= $index + 1 ?></td>
-                    <td><?= esc($k->nama_penuh) ?></td>
-                    <td><?= esc($k->email) ?></td>
-                    <td><?= esc($k->no_kp) ?></td>
+                    <td><?= esc($user->nama_penuh) ?></td>
+                    <td><?= esc($user->email) ?></td>
+                    <td><?= esc($user->no_kp) ?></td>
                     <td>
-                        <button class="btn btn-sm btn-warning" onclick="editKerani(<?= htmlspecialchars(json_encode($k)) ?>)">Edit</button>
-                        <button class="btn btn-sm btn-danger" onclick="confirmDelete(<?= $k->id ?>)">Padam</button>
-                        <button class="btn btn-sm btn-info" onclick="confirmReset(<?= $k->id ?>)">Reset</button>
-                        <button class="btn btn-sm btn-secondary" onclick="confirmSekat(<?= $k->id ?>)">Sekat</button>
+                        <button class="btn btn-sm btn-warning" onclick="editUser(<?= htmlspecialchars(json_encode($user)) ?>, '<?= esc($role) ?>')">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick="confirmDelete(<?= $user->id ?>, '<?= esc($role) ?>')">Padam</button>
+                        <button class="btn btn-sm btn-info" onclick="confirmReset(<?= $user->id ?>, '<?= esc($role) ?>')">Reset</button>
+                        <button class="btn btn-sm btn-secondary" onclick="confirmSekat(<?= $user->id ?>, '<?= esc($role) ?>')">Sekat</button>
                     </td>
                 </tr>
-                <?php endforeach; endif; ?>
+                <?php endforeach; else: ?>
+                <tr><td colspan="5" class="text-center">Tiada rekod <?= strtolower(esc($roleTitle)) ?> aktif.</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -75,7 +79,7 @@
 
 <div class="card mt-4">
     <div class="card-header bg-light">
-        <h5 class="mb-0">Senarai Kerani Disekat Capaian</h5>
+        <h5 class="mb-0">Senarai <?= esc($roleTitle) ?> Disekat Capaian</h5>
     </div>
     <div class="card-body">
         <table class="table table-bordered table-striped">
@@ -88,17 +92,17 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if(!empty($keraniDisekat)): foreach($keraniDisekat as $index => $kd): ?>
+                <?php if(!empty($blockedUsers)): foreach($blockedUsers as $index => $user): ?>
                 <tr>
                     <td><?= $index + 1 ?></td>
-                    <td><?= esc($kd->nama_penuh) ?></td>
-                    <td><?= esc($kd->no_kp) ?></td>
+                    <td><?= esc($user->nama_penuh) ?></td>
+                    <td><?= esc($user->no_kp) ?></td>
                     <td>
-                        <button class="btn btn-sm btn-success" onclick="confirmAktif(<?= $kd->id ?>)">Aktifkan Semula</button>
+                        <button class="btn btn-sm btn-success" onclick="confirmAktif(<?= $user->id ?>, '<?= esc($role) ?>')">Aktifkan Semula</button>
                     </td>
                 </tr>
                 <?php endforeach; else: ?>
-                <tr><td colspan="4" class="text-center">Tiada rekod sekatan.</td></tr>
+                <tr><td colspan="4" class="text-center">Tiada rekod sekatan untuk <?= strtolower(esc($roleTitle)) ?>.</td></tr>
                 <?php endif; ?>
             </tbody>
         </table>

@@ -37,13 +37,13 @@
                     <a class="nav-link" href="<?= base_url('admin/') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/kerani') ?>">Kerani</a>
+                    <a class="nav-link" href="<?= base_url('admin/manage/kerani') ?>">Kerani</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/ketua') ?>">Ketua</a>
+                    <a class="nav-link" href="<?= base_url('admin/manage/ketua') ?>">Ketua</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/pengurusan') ?>">Pengurusan</a>
+                    <a class="nav-link" href="<?= base_url('admin/manage/pengurusan') ?>">Pengurusan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('admin/kata_laluan') ?>">Kata Laluan</a>
@@ -73,41 +73,56 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script>
-function editKerani(data) {
-    document.getElementById('formTitle').innerText = 'Kemaskini Kerani';
+// Helper function to capitalize the first letter
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Global function to set form action for modals
+function setModalFormAction(formId, baseUrl, id) {
+    document.getElementById(formId).action = baseUrl + id;
+}
+
+// Function to handle editing any user type
+function editUser(data, role) {
+    document.getElementById('formTitle').innerText = 'Kemaskini ' + capitalizeFirstLetter(role);
     document.getElementById('keraniId').value = data.id;
     document.getElementById('nama_penuh').value = data.nama_penuh;
     document.getElementById('no_kp').value = data.no_kp;
     document.getElementById('email').value = data.email;
     document.getElementById('submitBtn').innerText = 'Kemaskini';
     document.getElementById('cancelBtn').style.display = 'inline-block';
+    // Update the main form action for editing
+    document.getElementById('keraniForm').action = '<?= base_url('admin/user_simpan/') ?>' + role;
 }
 
-function resetForm() {
+function resetForm(role) {
     document.getElementById('keraniForm').reset();
     document.getElementById('keraniId').value = '';
-    document.getElementById('formTitle').innerText = 'Daftar Kerani Baru';
+    document.getElementById('formTitle').innerText = 'Daftar ' + capitalizeFirstLetter(role) + ' Baru';
     document.getElementById('submitBtn').innerText = 'Simpan';
     document.getElementById('cancelBtn').style.display = 'none';
+    // Reset the main form action
+    document.getElementById('keraniForm').action = '<?= base_url('admin/user_simpan/') ?>' + role;
 }
 
-function confirmDelete(id) {
-    document.getElementById('deleteForm').action = '<?= base_url('admin/kerani_padam/') ?>' + id;
+function confirmDelete(id, role) {
+    setModalFormAction('deleteForm', '<?= base_url('admin/user_padam/') ?>' + role + '/', id);
     new bootstrap.Modal(document.getElementById('deleteModal')).show();
 }
 
-function confirmReset(id) {
-    document.getElementById('resetForm').action = '<?= base_url('admin/kerani_reset/') ?>' + id;
+function confirmReset(id, role) {
+    setModalFormAction('resetForm', '<?= base_url('admin/user_reset/') ?>' + role + '/', id);
     new bootstrap.Modal(document.getElementById('resetModal')).show();
 }
 
-function confirmSekat(id) {
-    document.getElementById('sekatForm').action = '<?= base_url('admin/kerani_sekat/') ?>' + id;
+function confirmSekat(id, role) {
+    setModalFormAction('sekatForm', '<?= base_url('admin/user_sekat/') ?>' + role + '/', id);
     new bootstrap.Modal(document.getElementById('sekatModal')).show();
 }
 
-function confirmAktif(id) {
-    document.getElementById('aktifForm').action = '<?= base_url('admin/kerani_aktifkan/') ?>' + id;
+function confirmAktif(id, role) {
+    setModalFormAction('aktifForm', '<?= base_url('admin/user_aktifkan/') ?>' + role + '/', id);
     new bootstrap.Modal(document.getElementById('aktifModal')).show();
 }
 </script>
@@ -149,7 +164,7 @@ function confirmAktif(id) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    Adakah anda pasti ingin memadam data kerani ini?
+                    Adakah anda pasti ingin memadam data ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -171,7 +186,7 @@ function confirmAktif(id) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    Adakah anda pasti ingin set semula kata laluan kerani ini kepada nombor kad pengenalannya?
+                    Adakah anda pasti ingin set semula kata laluan pengguna ini kepada nombor kad pengenalannya?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -193,7 +208,7 @@ function confirmAktif(id) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    Adakah anda pasti ingin menyekat capaian akaun kerani ini?
+                    Adakah anda pasti ingin menyekat capaian akaun pengguna ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -215,7 +230,7 @@ function confirmAktif(id) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    Adakah anda pasti ingin mengaktifkan semula akaun kerani ini?
+                    Adakah anda pasti ingin mengaktifkan semula akaun pengguna ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

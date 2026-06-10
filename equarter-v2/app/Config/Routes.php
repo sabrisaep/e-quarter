@@ -20,5 +20,16 @@ $routes->group('admin', ['filter' => 'adminauth'], function ($routes) {
     $routes->post('user_sekat/(:segment)/(:num)', [Admin::class, 'user_sekat']);
     $routes->post('user_aktifkan/(:segment)/(:num)', [Admin::class, 'user_aktifkan']);
 
+    $routes->get('jabatan', [Admin::class, 'jabatan']);
+
+
+    /*
+     * Jabatan
+     * - Ketua Program / Jabatan
+     * - Program
+     *   - Mata Pelajaran
+     */
     // perlu tambah pengurusan senarai jabatan & ketua
+    // tambah
+    // selepas keluarkan role=ketua dari pengguna
 });

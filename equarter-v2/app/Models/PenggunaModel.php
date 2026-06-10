@@ -17,7 +17,7 @@ class PenggunaModel extends Model
         'password',
         'role',
         'status',
-        'last_login'
+        'last_login',
     ];
 
     // Konfigurasi Tarikh Automatik
@@ -32,7 +32,7 @@ class PenggunaModel extends Model
         'email'      => 'required|valid_email|is_unique[pengguna.email,id,{id}]',
         'no_kp'      => 'required|numeric|exact_length[12]|is_unique[pengguna.no_kp,id,{id}]',
         'password'   => 'permit_empty|min_length[6]',
-        'role'       => 'required|in_list[kerani,ketua,pengurusan]',
+        'role'       => 'required|in_list[kerani,pengurusan]',
         'status'     => 'required|in_list[aktif,sekat]',
     ];
 

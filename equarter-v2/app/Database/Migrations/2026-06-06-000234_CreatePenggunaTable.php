@@ -33,7 +33,7 @@ class CreatePenggunaTable extends Migration
             ],
             'role' => [
                 'type'      => 'ENUM',
-                'constraint'=> ['kerani', 'ketua', 'pengurusan'],
+                'constraint'=> ['kerani', 'pengurusan'],
             ],
             'status' => [
                 'type'       => 'ENUM',

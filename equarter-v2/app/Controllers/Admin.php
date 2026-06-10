@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Models\JabatanModel;
+use App\Models\KetuaModel;
+use App\Models\MataPelajaranModel;
 use App\Models\PenggunaModel;
+use App\Models\ProgramModel;
 use CodeIgniter\HTTP\RedirectResponse;
 use ReflectionException;
 
@@ -22,23 +26,34 @@ class Admin extends BaseController
     public function index(): string
     {
         $penggunaModel = new PenggunaModel();
+        $ketuaModel = new KetuaModel();
+        $jabatanModel = new JabatanModel();
+        $programModel = new ProgramModel();
+        $mataPelajaranModel = new MataPelajaranModel();
+
+        $jumlahJabatan = $jabatanModel->countAllResults();
+        $jumlahProgram = $programModel->countAllResults();
+        $jumlahMataPelajaran = $mataPelajaranModel->countAllResults();
 
         $jumlahKerani = $penggunaModel->where(['role' => 'kerani', 'status' => 'aktif'])->countAllResults();
-        $jumlahKetua = $penggunaModel->where(['role' => 'ketua', 'status' => 'aktif'])->countAllResults();
         $jumlahPengurusan = $penggunaModel->where(['role' => 'pengurusan', 'status' => 'aktif'])->countAllResults();
+        $jumlahKetua = $ketuaModel->where(['status' => 'aktif'])->countAllResults();
 
         $kerani = $penggunaModel->asObject()->where(['role' => 'kerani', 'status' => 'aktif'])->orderBy('nama_penuh', 'ASC')->findAll();
-        $ketua = $penggunaModel->asObject()->where(['role' => 'ketua', 'status' => 'aktif'])->orderBy('nama_penuh', 'ASC')->findAll();
         $pengurusan = $penggunaModel->asObject()->where(['role' => 'pengurusan', 'status' => 'aktif'])->orderBy('nama_penuh', 'ASC')->findAll();
+        $ketua = $ketuaModel->asObject()->where(['status' => 'aktif'])->orderBy('nama_penuh', 'ASC')->findAll();
 
         $data = [
             'mesej' => session()->getFlashdata('mesej'),
+            'jumlahJabatan' => $jumlahJabatan,
+            'jumlahProgram' => $jumlahProgram,
+            'jumlahMataPelajaran' => $jumlahMataPelajaran,
             'jumlahKerani' => $jumlahKerani,
             'jumlahKetua' => $jumlahKetua,
             'jumlahPengurusan' => $jumlahPengurusan,
             'kerani' => $kerani,
-            'ketua' => $ketua,
             'pengurusan' => $pengurusan,
+            'ketua' => $ketua,
         ];
         return view('admin/dashboard', $data);
     }
@@ -72,10 +87,10 @@ class Admin extends BaseController
         $id = $this->request->getPost('id');
         $data = [
             'nama_penuh' => $this->request->getPost('nama_penuh'),
-            'email'      => $this->request->getPost('email'),
-            'no_kp'      => $this->request->getPost('no_kp'),
-            'role'       => $role,
-            'status'     => 'aktif'
+            'email' => $this->request->getPost('email'),
+            'no_kp' => $this->request->getPost('no_kp'),
+            'role' => $role,
+            'status' => 'aktif'
         ];
 
         // Jika tiada ID, ini adalah pendaftaran baru, tetapkan kata laluan
@@ -89,7 +104,7 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('mesej', [
                 'tajuk' => 'Ralat Simpan',
                 'warna' => 'bg-danger',
-                'isi'   => 'Gagal menyimpan data. Sila pastikan Email dan No. KP belum didaftarkan.',
+                'isi' => 'Gagal menyimpan data. Sila pastikan Email dan No. KP belum didaftarkan.',
             ])->with('errors', $penggunaModel->errors());
         }
 
@@ -161,5 +176,18 @@ class Admin extends BaseController
             'warna' => 'bg-success',
             'isi' => 'Akaun ' . strtolower($this->getRoleTitle($role)) . ' telah diaktifkan semula.',
         ]);
+    }
+
+    public function jabatan(): string
+    {
+        $jabatanModel = new JabatanModel();
+
+        $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'jabatan' => $jabatan,
+        ];
+        return view('admin/jabatan', $data);
     }
 }

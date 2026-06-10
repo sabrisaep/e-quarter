@@ -37,13 +37,22 @@
                     <a class="nav-link" href="<?= base_url('admin/') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('admin/manage/pengurusan') ?>">Pengurusan</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('admin/manage/kerani') ?>">Kerani</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/manage/ketua') ?>">Ketua</a>
+                    <a class="nav-link" href="<?= base_url('admin/jabatan') ?>">Jabatan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/manage/pengurusan') ?>">Pengurusan</a>
+                    <a class="nav-link" href="<?= base_url('admin/ketua') ?>">Ketua</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('admin/program') ?>">Program</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('admin/mata_pelajaran') ?>">Mata Pelajaran</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('admin/kata_laluan') ?>">Kata Laluan</a>

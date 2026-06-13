@@ -41,7 +41,7 @@ class KetuaModel extends Model
         'email'      => 'required|valid_email|is_unique[ketua.email,id,{id}]', // Ditambah semula is_unique
         'no_kp'      => 'required|numeric|exact_length[12]|is_unique[ketua.no_kp,id,{id}]', // Ditambah semula is_unique
         'password'   => 'permit_empty|min_length[6]',
-        'status'     => 'required|in_list[aktif,tidak aktif]',
+        'status'     => 'required|in_list[aktif,sekat]',
         'last_login' => 'permit_empty|valid_date[Y-m-d H:i:s]'
     ];
 

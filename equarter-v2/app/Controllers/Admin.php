@@ -86,6 +86,7 @@ class Admin extends BaseController
 
         $id = $this->request->getPost('id');
         $data = [
+            'id' => $id,
             'nama_penuh' => $this->request->getPost('nama_penuh'),
             'email' => $this->request->getPost('email'),
             'no_kp' => $this->request->getPost('no_kp'),
@@ -96,6 +97,22 @@ class Admin extends BaseController
         // Jika tiada ID, ini adalah pendaftaran baru, tetapkan kata laluan
         if (!$id) {
             $data['password'] = $this->request->getPost('no_kp');
+        }
+
+        // Pastikan email atau no_kp belum wujud dalam table ketua
+        $ketuaModel = new KetuaModel();
+        $wujudKetua = $ketuaModel->groupStart()
+            ->where('email', $data['email'])
+            ->orWhere('no_kp', $data['no_kp'])
+            ->groupEnd()
+            ->first();
+
+        if ($wujudKetua) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
+            ]);
         }
 
         $simpan = $id ? $penggunaModel->update($id, $data) : $penggunaModel->insert($data);
@@ -181,8 +198,15 @@ class Admin extends BaseController
     public function jabatan(): string
     {
         $jabatanModel = new JabatanModel();
+        $ketuaModel = new KetuaModel();
+        $programModel = new ProgramModel();
 
         $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+
+        foreach ($jabatan as $j) {
+            $j->ketua = $ketuaModel->where('jabatan_id', $j->id)->countAllResults();
+            $j->bilangan_program = $programModel->where('jabatan_id', $j->id)->countAllResults();
+        }
 
         $data = [
             'mesej' => session()->getFlashdata('mesej'),
@@ -190,4 +214,199 @@ class Admin extends BaseController
         ];
         return view('admin/jabatan', $data);
     }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function jabatan_simpan(): RedirectResponse
+    {
+        $jabatanModel = new JabatanModel();
+
+        $id = $this->request->getPost('id');
+        $data = [
+            'id'           => $id,
+            'nama_jabatan' => strtoupper(trim($this->request->getPost('nama_jabatan'))),
+        ];
+
+        $simpan = $id ? $jabatanModel->update($id, $data) : $jabatanModel->insert($data);
+
+        if (!$simpan) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi' => 'Gagal menyimpan data jabatan. Sila pastikan nama jabatan tidak bertindih.',
+            ]);
+        }
+
+        return redirect()->to(base_url('admin/jabatan'))->with('mesej', [
+            'tajuk' => 'Simpan Data Jabatan',
+            'warna' => 'bg-success',
+            'isi' => 'Data jabatan berhasil disimpan.',
+        ]);
+    }
+
+    public function jabatan_padam(int $id): RedirectResponse
+    {
+        $jabatanModel = new JabatanModel();
+        $jabatanModel->delete($id);
+
+        return redirect()->to(base_url('admin/jabatan'))->with('mesej', [
+            'tajuk' => 'Padam Data Jabatan',
+            'warna' => 'bg-danger',
+            'isi' => 'Data jabatan berhasil dipadam.',
+        ]);
+    }
+
+    public function ketua(): string
+    {
+        $jabatanModel = new JabatanModel();
+        $ketuaModel = new KetuaModel();
+
+        $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+
+        foreach ($jabatan as $j) {
+            $j->ketua_aktif = $ketuaModel->asObject()->where(['jabatan_id' => $j->id, 'status' => 'aktif'])->orderBy('nama_penuh', 'ASC')->findAll();
+            $j->ketua_sekat = $ketuaModel->asObject()->where(['jabatan_id' => $j->id, 'status' => 'sekat'])->orderBy('nama_penuh', 'ASC')->findAll();
+        }
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'jabatan' => $jabatan,
+        ];
+        return view('admin/ketua', $data);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function ketua_simpan(): RedirectResponse
+    {
+        $ketuaModel = new KetuaModel();
+        $id = $this->request->getPost('id');
+        $data = [
+            'id'         => $id,
+            'nama_penuh' => $this->request->getPost('nama_penuh'),
+            'email'      => $this->request->getPost('email'),
+            'no_kp'      => $this->request->getPost('no_kp'),
+            'jabatan_id' => $this->request->getPost('jabatan_id'),
+            'status'     => 'aktif'
+        ];
+
+        if (!$id) {
+            $data['password'] = $this->request->getPost('no_kp');
+        }
+
+        // Pastikan email atau no_kp belum wujud dalam table ketua jika ini adalah ketua baru
+        $queryKetua = $ketuaModel->groupStart()
+            ->where('email', $data['email'])
+            ->orWhere('no_kp', $data['no_kp'])
+            ->groupEnd();
+        if ($id) $queryKetua->where('id !=', $id);
+        $wujudKetua = $queryKetua->first();
+
+        if ($wujudKetua) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
+            ]);
+        }
+
+        // Pastikan no_kp & email tidak wujud dalam table pengguna
+        $penggunaModel = new PenggunaModel();
+        $wujud = $penggunaModel->groupStart()
+            ->where('email', $data['email'])
+            ->orWhere('no_kp', $data['no_kp'])
+            ->groupEnd()
+            ->first();
+
+        if ($wujud) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan sebagai Kerani atau Pengurusan.',
+            ]);
+        }
+
+        $simpan = $id ? $ketuaModel->update($id, $data) : $ketuaModel->insert($data);
+
+        if (!$simpan) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi'   => 'Gagal menyimpan data Ketua. Sila pastikan email dan nombor kad pengenalan belum didaftarkan.',
+            ])->with('errors', $ketuaModel->errors());
+        }
+
+        return redirect()->to(base_url('admin/ketua'))->with('mesej', [
+            'tajuk' => 'Simpan Data Ketua',
+            'warna' => 'bg-success',
+            'isi'   => 'Data ketua program / jabatan berhasil disimpan.',
+        ]);
+    }
+
+    public function ketua_padam(int $id): RedirectResponse
+    {
+        $ketuaModel = new KetuaModel();
+        $ketuaModel->delete($id);
+
+        return redirect()->to(base_url('admin/ketua'))->with('mesej', [
+            'tajuk' => 'Padam Data Ketua',
+            'warna' => 'bg-danger',
+            'isi'   => 'Data ketua program / jabatan berhasil dipadam.',
+        ]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function ketua_reset(int $id): RedirectResponse
+    {
+        $ketuaModel = new KetuaModel();
+        $ketua = $ketuaModel->find($id);
+
+        if ($ketua) {
+            $ketuaModel->update($id, [
+                'password' => $ketua['no_kp']
+            ]);
+        }
+
+        return redirect()->to(base_url('admin/ketua'))->with('mesej', [
+            'tajuk' => 'Reset Kata Laluan',
+            'warna' => 'bg-info',
+            'isi'   => 'Kata laluan ketua telah diresetkan kepada No. KP.',
+        ]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function ketua_sekat(int $id): RedirectResponse
+    {
+        $ketuaModel = new KetuaModel();
+        $ketuaModel->update($id, ['status' => 'sekat']);
+
+        return redirect()->to(base_url('admin/ketua'))->with('mesej', [
+            'tajuk' => 'Sekat Akaun Ketua',
+            'warna' => 'bg-warning',
+            'isi'   => 'Akaun ketua program / jabatan telah disekat.',
+        ]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function ketua_aktifkan(int $id): RedirectResponse
+    {
+        $ketuaModel = new KetuaModel();
+        $ketuaModel->update($id, ['status' => 'aktif']);
+
+        return redirect()->to(base_url('admin/ketua'))->with('mesej', [
+            'tajuk' => 'Aktifkan Akaun Ketua',
+            'warna' => 'bg-success',
+            'isi'   => 'Akaun ketua program / jabatan telah diaktifkan semula.',
+        ]);
+    }
+
+
 }

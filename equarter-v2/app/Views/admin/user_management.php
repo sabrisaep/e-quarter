@@ -48,11 +48,11 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Bil</th>
+                    <th style="width: 50px;">Bil</th>
                     <th>Nama</th>
-                    <th>Emel</th>
-                    <th>No. KP</th>
-                    <th>Tindakan</th>
+                    <th style="width: 350px;">Emel</th>
+                    <th style="width: 150px;">No. KP</th>
+                    <th style="width: 250px;">Tindakan</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,10 +85,10 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Bil</th>
+                    <th style="width: 50px;">Bil</th>
                     <th>Nama</th>
-                    <th>No. KP</th>
-                    <th>Tindakan</th>
+                    <th style="width: 150px;">No. KP</th>
+                    <th style="width: 250px;">Tindakan</th>
                 </tr>
             </thead>
             <tbody>

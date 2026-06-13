@@ -34,28 +34,28 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarMenu">
             <ul class="navbar-nav gap-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/') ?>">Dashboard</a>
+                    <a class="nav-link <?= url_is('admin') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/manage/pengurusan') ?>">Pengurusan</a>
+                    <a class="nav-link <?= url_is('admin/manage/pengurusan*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/manage/pengurusan') ?>">Pengurusan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/manage/kerani') ?>">Kerani</a>
+                    <a class="nav-link <?= url_is('admin/manage/kerani*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/manage/kerani') ?>">Kerani</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/jabatan') ?>">Jabatan</a>
+                    <a class="nav-link <?= url_is('admin/jabatan*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/jabatan') ?>">Jabatan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/ketua') ?>">Ketua</a>
+                    <a class="nav-link <?= url_is('admin/ketua*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/ketua') ?>">Ketua</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/program') ?>">Program</a>
+                    <a class="nav-link <?= url_is('admin/program*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/program') ?>">Program</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/mata_pelajaran') ?>">Mata Pelajaran</a>
+                    <a class="nav-link <?= url_is('admin/mata_pelajaran*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/mata_pelajaran') ?>">Mata Pelajaran</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('admin/kata_laluan') ?>">Kata Laluan</a>
+                    <a class="nav-link <?= url_is('admin/kata_laluan*') ? 'active fw-bold' : '' ?>" href="<?= base_url('admin/kata_laluan') ?>">Kata Laluan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="<?= base_url('logout') ?>">Log Keluar</a>
@@ -249,5 +249,7 @@ function confirmAktif(id, role) {
         </div>
     </div>
 </div>
+
+<?= $this->renderSection('script') ?>
 </body>
 </html>

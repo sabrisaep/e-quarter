@@ -30,6 +30,7 @@ class ProgramModel extends Model
 
     // Peraturan validasi sebelum simpan data
     protected $validationRules      = [
+        'id'         => 'permit_empty',
         'jabatan_id'   => 'required|numeric|is_not_unique[jabatan.id]',
         'nama_program' => 'required|min_length[3]|max_length[255]',
     ];

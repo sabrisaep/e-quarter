@@ -30,6 +30,7 @@ class MataPelajaranModel extends Model
 
     // Peraturan Validasi (Pilihan tetapi sangat digalakkan)
     protected $validationRules      = [
+        'id'         => 'permit_empty',
         'program_id' => 'required|is_natural_no_zero',
         'nama_mp'    => 'required|min_length[3]|max_length[255]',
     ];

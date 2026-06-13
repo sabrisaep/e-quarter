@@ -28,6 +28,7 @@ class PenggunaModel extends Model
 
     // Pembidaan Validasi (Opsional tetapi digalakkan)
     protected $validationRules = [
+        'id'         => 'permit_empty',
         'nama_penuh' => 'required|min_length[3]',
         'email'      => 'required|valid_email|is_unique[pengguna.email,id,{id}]',
         'no_kp'      => 'required|numeric|exact_length[12]|is_unique[pengguna.no_kp,id,{id}]',
@@ -36,7 +37,20 @@ class PenggunaModel extends Model
         'status'     => 'required|in_list[aktif,sekat]',
     ];
 
-    protected $validationMessages   = [];
+    protected $validationMessages = [
+        'email' => [
+            'is_unique' => 'Alamat emel ini telah didaftarkan.',
+            'required'   => 'Sila masukkan alamat emel.',
+        ],
+        'no_kp' => [
+            'is_unique'    => 'Nombor Kad Pengenalan ini telah didaftarkan.',
+            'exact_length' => 'Nombor Kad Pengenalan mestilah 12 digit tanpa tanda sempang (-).',
+        ],
+        'password' => [
+            'min_length' => 'Kata laluan mestilah sekurang-kurangnya 6 aksara.',
+        ],
+    ];
+
     protected $skipValidation       = false;
 
     // Hash password secara automatik sebelum simpan

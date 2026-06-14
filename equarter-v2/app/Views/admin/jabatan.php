@@ -35,7 +35,7 @@
                     <th>Nama Jabatan</th>
                     <th style="width: 200px;">Bilangan Ketua</th>
                     <th style="width: 200px;">Bilangan Program</th>
-                    <th style="width: 150px;" class="text-center">Tindakan</th>
+                    <th style="width: 150px;">Tindakan</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                             <td><?= esc($row->nama_jabatan); ?></td>
                             <td><?= $row->ketua ?? 0; ?></td>
                             <td><?= $row->bilangan_program ?? 0; ?></td>
-                            <td class="text-center">
+                            <td>
                                 <button type="button" class="btn btn-sm btn-warning" onclick="editJabatan(<?= $row->id; ?>, '<?= esc($row->nama_jabatan, 'js'); ?>')">Edit</button>
                                 <?php if (($row->bilangan_program ?? 0) > 0 || ($row->ketua ?? 0) > 0): ?>
                                     <button type="button" class="btn btn-sm btn-danger" disabled title="Jabatan mempunyai program atau ketua">Padam</button>

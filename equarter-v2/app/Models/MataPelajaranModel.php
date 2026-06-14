@@ -32,7 +32,7 @@ class MataPelajaranModel extends Model
     protected $validationRules      = [
         'id'         => 'permit_empty',
         'program_id' => 'required|is_natural_no_zero',
-        'nama_mp'    => 'required|min_length[3]|max_length[255]',
+        'nama_mp'    => 'required|min_length[3]|max_length[255]|is_unique[mata_pelajaran.nama_mp,id,{id}]',
     ];
 
     protected $validationMessages   = [
@@ -48,5 +48,5 @@ class MataPelajaranModel extends Model
     ];
 
     protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    protected $cleanValidationRules = false;
 }

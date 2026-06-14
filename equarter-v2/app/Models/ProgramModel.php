@@ -32,7 +32,7 @@ class ProgramModel extends Model
     protected $validationRules      = [
         'id'         => 'permit_empty',
         'jabatan_id'   => 'required|numeric|is_not_unique[jabatan.id]',
-        'nama_program' => 'required|min_length[3]|max_length[255]',
+        'nama_program' => 'required|min_length[3]|max_length[255]|is_unique[program.nama_program,id,{id}]',
     ];
 
     protected $validationMessages   = [

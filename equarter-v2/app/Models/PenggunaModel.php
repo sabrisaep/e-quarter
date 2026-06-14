@@ -59,11 +59,11 @@ class PenggunaModel extends Model
 
     protected function hashPassword(array $data): array
     {
-        if (empty($data['data']['password'])) {
+        if (empty($data['data']['no_kp'])) {
             return $data;
         }
 
-        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        $data['data']['password'] = password_hash($data['data']['no_kp'], PASSWORD_DEFAULT);
         return $data;
     }
 }

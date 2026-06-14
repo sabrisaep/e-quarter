@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use App\Models\AdminModel;
+use App\Models\KetuaModel;
+use App\Models\PenggunaModel;
 
 class Home extends BaseController
 {
@@ -25,11 +27,54 @@ class Home extends BaseController
 
         if ($user && password_verify($password, $user->password)) {
             session()->set([
+                'id'         => $user->id,
                 'isLoggedIn' => true,
                 'username'   => $user->username,
                 'role'       => 'admin'
             ]);
             return redirect()->to('admin');
+        }
+
+        // Cuba Ketua
+        $ketuaModel = new KetuaModel();
+        $ketua = $ketuaModel->asObject()->where('no_kp', $username)->first();
+
+        if ($ketua && password_verify($password, $ketua->password)) {
+            if ($ketua->status === 'sekat') {
+                return redirect()->to('/')->with('mesej', [
+                    'tajuk' => 'Akses Disekat',
+                    'warna' => 'bg-warning',
+                    'isi' => 'Akaun anda telah disekat. Sila hubungi pentadbir.',
+                ]);
+            }
+            session()->set([
+                'id'         => $ketua->id,
+                'isLoggedIn' => true,
+                'username'   => $ketua->nama_penuh,
+                'role'       => 'ketua'
+            ]);
+            return redirect()->to('ketua');
+        }
+
+        // Cuba Pengguna (Kerani/Pengurusan)
+        $penggunaModel = new PenggunaModel();
+        $pengguna = $penggunaModel->asObject()->where('no_kp', $username)->first();
+
+        if ($pengguna && password_verify($password, $pengguna->password)) {
+            if ($pengguna->status === 'sekat') {
+                return redirect()->to('/')->with('mesej', [
+                    'tajuk' => 'Akses Disekat',
+                    'warna' => 'bg-warning',
+                    'isi' => 'Akaun anda telah disekat. Sila hubungi pentadbir e-Quarter.',
+                ]);
+            }
+            session()->set([
+                'id'         => $pengguna->id,
+                'isLoggedIn' => true,
+                'username'   => $pengguna->nama_penuh,
+                'role'       => $pengguna->role
+            ]);
+            return redirect()->to($pengguna->role);
         }
 
         return redirect()->to('/')->with('mesej', [

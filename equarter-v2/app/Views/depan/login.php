@@ -77,7 +77,7 @@
                     <div class="card h-100 border-primary shadow-sm">
                         <div class="card-header fw-bold bg-primary text-white">Pentadbir Sistem</div>
                         <div class="card-body">
-                            <p class="card-text">Menguruskan senarai kerani kewangan, ketua program / jabatan & pihak pengurusan.</p>
+                            <p class="card-text">Menguruskan senarai kerani kewangan, ketua program / jabatan & pihak pengurusan, serta menguruskan senarai jabatan, program & mata pelajaran</p>
                         </div>
                         <div class="card-footer">
                             Pembangunan sedang berjalan

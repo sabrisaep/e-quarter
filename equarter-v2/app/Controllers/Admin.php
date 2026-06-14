@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\AdminModel;
 use App\Models\JabatanModel;
 use App\Models\KetuaModel;
 use App\Models\MataPelajaranModel;
 use App\Models\PenggunaModel;
 use App\Models\ProgramModel;
 use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\HTTP\ResponseInterface;
 use ReflectionException;
 
 class Admin extends BaseController
@@ -111,7 +113,7 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('mesej', [
                 'tajuk' => 'Ralat Simpan',
                 'warna' => 'bg-danger',
-                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
+                'isi' => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
             ]);
         }
 
@@ -154,7 +156,7 @@ class Admin extends BaseController
 
         if ($pengguna) {
             $penggunaModel->update($id, [
-                'password' => $pengguna['no_kp']
+                'password' => password_hash($pengguna['no_kp'], PASSWORD_DEFAULT)
             ]);
         }
 
@@ -224,7 +226,7 @@ class Admin extends BaseController
 
         $id = $this->request->getPost('id');
         $data = [
-            'id'           => $id,
+            'id' => $id,
             'nama_jabatan' => strtoupper(trim($this->request->getPost('nama_jabatan'))),
         ];
 
@@ -284,12 +286,12 @@ class Admin extends BaseController
         $ketuaModel = new KetuaModel();
         $id = $this->request->getPost('id');
         $data = [
-            'id'         => $id,
+            'id' => $id,
             'nama_penuh' => $this->request->getPost('nama_penuh'),
-            'email'      => $this->request->getPost('email'),
-            'no_kp'      => $this->request->getPost('no_kp'),
+            'email' => $this->request->getPost('email'),
+            'no_kp' => $this->request->getPost('no_kp'),
             'jabatan_id' => $this->request->getPost('jabatan_id'),
-            'status'     => 'aktif'
+            'status' => 'aktif'
         ];
 
         if (!$id) {
@@ -308,7 +310,7 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('mesej', [
                 'tajuk' => 'Ralat Simpan',
                 'warna' => 'bg-danger',
-                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
+                'isi' => 'Gagal menyimpan. Email atau No. KP telah didaftarkan dalam senarai Ketua.',
             ]);
         }
 
@@ -324,7 +326,7 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('mesej', [
                 'tajuk' => 'Ralat Simpan',
                 'warna' => 'bg-danger',
-                'isi'   => 'Gagal menyimpan. Email atau No. KP telah didaftarkan sebagai Kerani atau Pengurusan.',
+                'isi' => 'Gagal menyimpan. Email atau No. KP telah didaftarkan sebagai Kerani atau Pengurusan.',
             ]);
         }
 
@@ -334,14 +336,14 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('mesej', [
                 'tajuk' => 'Ralat Simpan',
                 'warna' => 'bg-danger',
-                'isi'   => 'Gagal menyimpan data Ketua. Sila pastikan email dan nombor kad pengenalan belum didaftarkan.',
+                'isi' => 'Gagal menyimpan data Ketua. Sila pastikan email dan nombor kad pengenalan belum didaftarkan.',
             ])->with('errors', $ketuaModel->errors());
         }
 
         return redirect()->to(base_url('admin/ketua'))->with('mesej', [
             'tajuk' => 'Simpan Data Ketua',
             'warna' => 'bg-success',
-            'isi'   => 'Data ketua program / jabatan berhasil disimpan.',
+            'isi' => 'Data ketua program / jabatan berhasil disimpan.',
         ]);
     }
 
@@ -353,7 +355,7 @@ class Admin extends BaseController
         return redirect()->to(base_url('admin/ketua'))->with('mesej', [
             'tajuk' => 'Padam Data Ketua',
             'warna' => 'bg-danger',
-            'isi'   => 'Data ketua program / jabatan berhasil dipadam.',
+            'isi' => 'Data ketua program / jabatan berhasil dipadam.',
         ]);
     }
 
@@ -365,16 +367,17 @@ class Admin extends BaseController
         $ketuaModel = new KetuaModel();
         $ketua = $ketuaModel->find($id);
 
+        # password kena hash dulu
         if ($ketua) {
             $ketuaModel->update($id, [
-                'password' => $ketua['no_kp']
+                'password' => password_hash($ketua['no_kp'], PASSWORD_DEFAULT)
             ]);
         }
 
         return redirect()->to(base_url('admin/ketua'))->with('mesej', [
             'tajuk' => 'Reset Kata Laluan',
             'warna' => 'bg-info',
-            'isi'   => 'Kata laluan ketua telah diresetkan kepada No. KP.',
+            'isi' => 'Kata laluan ketua telah diresetkan kepada No. KP.',
         ]);
     }
 
@@ -389,7 +392,7 @@ class Admin extends BaseController
         return redirect()->to(base_url('admin/ketua'))->with('mesej', [
             'tajuk' => 'Sekat Akaun Ketua',
             'warna' => 'bg-warning',
-            'isi'   => 'Akaun ketua program / jabatan telah disekat.',
+            'isi' => 'Akaun ketua program / jabatan telah disekat.',
         ]);
     }
 
@@ -404,9 +407,243 @@ class Admin extends BaseController
         return redirect()->to(base_url('admin/ketua'))->with('mesej', [
             'tajuk' => 'Aktifkan Akaun Ketua',
             'warna' => 'bg-success',
-            'isi'   => 'Akaun ketua program / jabatan telah diaktifkan semula.',
+            'isi' => 'Akaun ketua program / jabatan telah diaktifkan semula.',
         ]);
     }
 
+    public function program(): string
+    {
+        $jabatanModel = new JabatanModel();
+        $programModel = new ProgramModel();
+        $mataPelajaranModel = new MataPelajaranModel();
 
+        $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+
+        foreach ($jabatan as $j) {
+            $j->program = $programModel->asObject()->where(['jabatan_id' => $j->id])->orderBy('nama_program', 'ASC')->findAll();
+            foreach ($j->program as $p) {
+                $p->bilangan_mata_pelajaran = $mataPelajaranModel->where(['program_id' => $p->id])->countAllResults();
+            }
+        }
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'jabatan' => $jabatan,
+        ];
+        return view('admin/program', $data);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function program_simpan(): RedirectResponse
+    {
+        $programModel = new ProgramModel();
+        $id = $this->request->getPost('id');
+        $data = [
+            'id' => $id,
+            'nama_program' => strtoupper(trim($this->request->getPost('nama_program'))),
+            'jabatan_id' => $this->request->getPost('jabatan_id'),
+        ];
+
+        $simpan = $id ? $programModel->update($id, $data) : $programModel->insert($data);
+
+        if (!$simpan) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi' => 'Gagal menyimpan data program. Sila pastikan nama program tidak bertindih.',
+            ]);
+        }
+
+        return redirect()->to(base_url('admin/program'))->with('mesej', [
+            'tajuk' => 'Simpan Data Program',
+            'warna' => 'bg-success',
+            'isi' => 'Data program berhasil disimpan.',
+        ]);
+    }
+
+    public function program_padam(int $id): RedirectResponse
+    {
+        $programModel = new ProgramModel();
+        $programModel->delete($id);
+
+        return redirect()->to(base_url('admin/program'))->with('mesej', [
+            'tajuk' => 'Padam Data Program',
+            'warna' => 'bg-danger',
+            'isi' => 'Data program berhasil dipadam.',
+        ]);
+    }
+
+    public function mata_pelajaran(): string
+    {
+        $jabatanModel = new JabatanModel();
+        $programModel = new ProgramModel();
+        $mataPelajaranModel = new MataPelajaranModel();
+
+        $selectedJabatan = $this->request->getGet('jabatan_id');
+        $selectedProgram = $this->request->getGet('program_id');
+
+        $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+        $programs = [];
+        $subjects = [];
+
+        if ($selectedJabatan) {
+            $programs = $programModel->asObject()->where('jabatan_id', $selectedJabatan)->orderBy('nama_program', 'ASC')->findAll();
+        }
+
+        if ($selectedProgram) {
+            $subjects = $mataPelajaranModel->asObject()->where('program_id', $selectedProgram)->orderBy('nama_mp', 'ASC')->findAll();
+        }
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'jabatan' => $jabatan,
+            'programs' => $programs,
+            'subjects' => $subjects,
+            'selectedJabatan' => $selectedJabatan,
+            'selectedProgram' => $selectedProgram,
+        ];
+        return view('admin/mata_pelajaran', $data);
+    }
+
+    public function mata_pelajaran_semua(): string
+    {
+        $jabatanModel = new JabatanModel();
+        $programModel = new ProgramModel();
+        $mataPelajaranModel = new MataPelajaranModel();
+
+        $jabatan = $jabatanModel->asObject()->orderBy('nama_jabatan', 'ASC')->findAll();
+        foreach ($jabatan as $j) {
+            $j->program = $programModel->asObject()->where('jabatan_id', $j->id)->orderBy('nama_program', 'ASC')->findAll();
+            foreach ($j->program as $p) {
+                $p->mata_pelajaran = $mataPelajaranModel->asObject()->where('program_id', $p->id)->orderBy('nama_mp', 'ASC')->findAll();
+            }
+        }
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'jabatan' => $jabatan,
+        ];
+        return view('admin/mata_pelajaran_semua', $data);
+    }
+
+    /**
+     * @param int $jabatan_id
+     * @return ResponseInterface
+     */
+    public function getProgramByJabatan(int $jabatan_id): ResponseInterface
+    {
+        $programModel = new ProgramModel();
+        $programs = $programModel->where('jabatan_id', $jabatan_id)->orderBy('nama_program', 'ASC')->findAll();
+        return $this->response->setJSON($programs);
+    }
+
+    public function getMataPelajaranByProgram(int $program_id): ResponseInterface
+    {
+        $mataPelajaranModel = new MataPelajaranModel();
+        $subjects = $mataPelajaranModel->where('program_id', $program_id)->orderBy('nama_mp', 'ASC')->findAll();
+        return $this->response->setJSON($subjects);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function mata_pelajaran_simpan(): RedirectResponse
+    {
+        $mataPelajaranModel = new MataPelajaranModel();
+        $id = $this->request->getPost('id');
+        $jabatan_id = $this->request->getPost('jabatan_id');
+        $data = [
+            'id' => $id,
+            'program_id' => $this->request->getPost('program_id'),
+            'nama_mp' => strtoupper(trim($this->request->getPost('nama_mp'))),
+        ];
+
+        $simpan = $id ? $mataPelajaranModel->update($id, $data) : $mataPelajaranModel->insert($data);
+
+        if (!$simpan) {
+            return redirect()->back()->withInput()->with('mesej', [
+                'tajuk' => 'Ralat Simpan',
+                'warna' => 'bg-danger',
+                'isi' => 'Gagal menyimpan data mata pelajaran. Sila pastikan kod mata pelajaran tidak bertindih.',
+            ]);
+        }
+
+        return redirect()->to(base_url("admin/mata_pelajaran?jabatan_id=$jabatan_id&program_id={$data['program_id']}"))->with('mesej', [
+            'tajuk' => 'Simpan Data Mata Pelajaran',
+            'warna' => 'bg-success',
+            'isi' => 'Data mata pelajaran berhasil disimpan.',
+        ]);
+    }
+
+    public function mata_pelajaran_padam(int $id): RedirectResponse
+    {
+        $mataPelajaranModel = new MataPelajaranModel();
+        $mataPelajaranModel->delete($id);
+
+        return redirect()->to(base_url('admin/mata_pelajaran'))->with('mesej', [
+            'tajuk' => 'Padam Data Mata Pelajaran',
+            'warna' => 'bg-danger',
+            'isi' => 'Data mata pelajaran berhasil dipadam.',
+        ]);
+    }
+
+    public function kata_laluan(): string
+    {
+        $adminModel = new AdminModel();
+        $admin = $adminModel->asObject()->where('id', session()->get('id'))->first();
+
+        $data = [
+            'mesej' => session()->getFlashdata('mesej'),
+            'admin' => $admin,
+        ];
+        return view('admin/kata_laluan', $data);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function kata_laluan_simpan(): RedirectResponse
+    {
+        $adminModel = new AdminModel();
+        $id = session()->get('id');
+        $old_password = $this->request->getPost('kata_laluan_lama');
+        $new_password = $this->request->getPost('kata_laluan_baru');
+        $password_confirm = $this->request->getPost('sahkan_kata_laluan');
+
+        if ($new_password !== $password_confirm) {
+            return redirect()->back()->with('mesej', [
+                'tajuk' => 'Ralat',
+                'warna' => 'bg-danger',
+                'isi' => 'Kata laluan dan pengesahan kata laluan tidak sepadan.',
+            ]);
+        }
+
+        $admin = $adminModel->asObject()->find($id);
+
+        if (!$admin || !password_verify($old_password, $admin->password)) {
+            return redirect()->back()->with('mesej', [
+                'tajuk' => 'Ralat',
+                'warna' => 'bg-danger',
+                'isi' => 'Kata laluan lama tidak tepat.',
+            ]);
+        }
+
+        $simpan = $adminModel->update($id, ['password' => password_hash($new_password, PASSWORD_DEFAULT)]);
+
+        if (!$simpan) {
+            return redirect()->back()->with('mesej', [
+                'tajuk' => 'Ralat',
+                'warna' => 'bg-danger',
+                'isi' => 'Gagal mengemaskini kata laluan.',
+            ]);
+        }
+
+        return redirect()->to(base_url('admin/kata_laluan'))->with('mesej', [
+            'tajuk' => 'Berjaya',
+            'warna' => 'bg-success',
+            'isi' => 'Kata laluan berjaya dikemaskini.',
+        ]);
+    }
 }

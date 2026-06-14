@@ -2,7 +2,7 @@
 <?= $this->section('content'); ?>
 <?php
 /**
- * @var object[] $jabatan
+ * @var object $jabatan
  */
 ?>
 
@@ -53,7 +53,7 @@
 <?php if (!empty($jabatan) && is_array($jabatan)): ?>
     <?php foreach ($jabatan as $j): ?>
         <div class="card mt-4">
-            <div class="card-header bg-light">
+            <div class="card-header">
                 <h4 class="mb-0 text-dark"><?= esc($j->nama_jabatan); ?></h4>
             </div>
             <div class="card-body">

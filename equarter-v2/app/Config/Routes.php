@@ -2,6 +2,9 @@
 
 use App\Controllers\Admin;
 use App\Controllers\Home;
+use App\Controllers\Kerani;
+use App\Controllers\Ketua;
+use App\Controllers\Pengurusan;
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
@@ -31,14 +34,29 @@ $routes->group('admin', ['filter' => 'adminauth'], function ($routes) {
     $routes->post('ketua_sekat/(:num)', [Admin::class, 'ketua_sekat']);
     $routes->post('ketua_aktifkan/(:num)', [Admin::class, 'ketua_aktifkan']);
 
+    $routes->get('program', [Admin::class, 'program']);
+    $routes->post('program_simpan', [Admin::class, 'program_simpan']);
+    $routes->post('program_padam/(:num)', [Admin::class, 'program_padam']);
 
-    /*
-     * Jabatan
-     * - Ketua Program / Jabatan
-     * - Program
-     *   - Mata Pelajaran
-     */
-    // perlu tambah pengurusan senarai jabatan & ketua
-    // tambah
-    // selepas keluarkan role=ketua dari pengguna
+    $routes->get('mata_pelajaran', [Admin::class, 'mata_pelajaran']);
+    $routes->get('mata_pelajaran_semua', [Admin::class, 'mata_pelajaran_semua']);
+    $routes->post('mata_pelajaran_simpan', [Admin::class, 'mata_pelajaran_simpan']);
+    $routes->post('mata_pelajaran_padam/(:num)', [Admin::class, 'mata_pelajaran_padam']);
+    $routes->get('get-program-by-jabatan/(:num)', [Admin::class, 'getProgramByJabatan']);
+    $routes->get('get-mp-by-program/(:num)', [Admin::class, 'getMataPelajaranByProgram']);
+
+    $routes->get('kata_laluan', [Admin::class, 'kata_laluan']);
+    $routes->post('kata_laluan_simpan', [Admin::class, 'kata_laluan_simpan']);
+});
+
+$routes->group('kerani', ['filter' => 'keraniauth'], function ($routes) {
+    $routes->get('/', [Kerani::class, 'index']);
+});
+
+$routes->group('ketua', ['filter' => 'ketuaauth'], function ($routes) {
+    $routes->get('/', [Ketua::class, 'index']);
+});
+
+$routes->group('pengurusan', ['filter' => 'pengurusanauth'], function ($routes) {
+    $routes->get('/', [Pengurusan::class, 'index']);
 });

@@ -3,6 +3,9 @@
 namespace Config;
 
 use App\Filters\AdminAuth;
+use App\Filters\KeraniAuth;
+use App\Filters\KetuaAuth;
+use App\Filters\PengurusanAuth;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -36,6 +39,9 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'adminauth'     => AdminAuth::class,
+        'keraniauth'    => KeraniAuth::class,
+        'ketuaauth'     => KetuaAuth::class,
+        'pengurusanauth'=> PengurusanAuth::class,
     ];
 
     /**

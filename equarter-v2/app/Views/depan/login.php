@@ -80,7 +80,7 @@
                             <p class="card-text">Menguruskan senarai kerani kewangan, ketua program / jabatan & pihak pengurusan, serta menguruskan senarai jabatan, program & mata pelajaran</p>
                         </div>
                         <div class="card-footer">
-                            Pembangunan sedang berjalan
+                            Alpha Testing
                         </div>
                     </div>
                 </div>

@@ -93,6 +93,27 @@
     </div>
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Sahkan Padam</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Adakah anda pasti ingin memadam mata pelajaran ini?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <form id="form-delete" action="" method="post">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="id" id="delete_id">
+                    <button type="submit" class="btn btn-danger">Padam</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection(); ?>
 <?= $this->section('script'); ?>
 <script>
@@ -171,7 +192,7 @@
                                         <td>${item.nama_mp}</td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-warning btn-edit" data-id="${item.id}" data-nama="${item.nama_mp}" data-jabatan="${$('#filter_jabatan').val()}" data-program="${programId}">Edit</button>
-                                            <a href="<?= base_url('admin/mata_pelajaran_padam') ?>/${item.id}" class="btn btn-sm btn-danger" onclick="return confirm('Adakah anda pasti?')">Padam</a>
+                                            <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="${item.id}">Padam</button>
                                         </td>
                                     </tr>
                                 `);
@@ -217,6 +238,13 @@
             $('html, body').animate({
                 scrollTop: $("#form-mp").offset().top - 100
             }, 500);
+        });
+
+        $(document).on('click', '.btn-delete', function() {
+            let id = $(this).data('id');
+            $('#delete_id').val(id);
+            $('#form-delete').attr('action', '<?= base_url('admin/mata_pelajaran_padam') ?>/' + id);
+            $('#deleteModal').modal('show');
         });
     });
 

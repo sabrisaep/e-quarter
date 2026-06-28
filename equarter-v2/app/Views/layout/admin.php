@@ -4,7 +4,7 @@
  */
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="ms">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -22,7 +22,9 @@
     <div class="container-fluid">
 
         <!-- Kiri -->
-        <a class="navbar-brand" href="#">e-Quarter</a>
+        <img src="<?= base_url('assets/images/logo_kvsas.png') ?>" alt="Logo KVSAS" height="50"
+             class="me-3">
+        <a class="navbar-brand" href="#">e-Quarter 2.0</a>
         (<?= ucfirst(session('username')) ?>)
 
         <!-- Button mobile -->

@@ -29,8 +29,11 @@ class KetuaModel extends Model
         'last_login'
     ];
 
-    // Ditetapkan ke false kerana jadual ini tiada kolum created_at & updated_at
-    protected $useTimestamps = false;
+    // Konfigurasi Tarikh Automatik
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
     // --- PERATURAN VALIDASI ---
     // Sintaks {id} digunakan supaya sistem mengabaikan rekod sedia ada semasa operasi UPDATE (elak ralat is_unique)

@@ -17,6 +17,9 @@ class Home extends BaseController
         return view('depan/login', $data);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function login(): RedirectResponse
     {
         $model = new AdminModel();
@@ -53,6 +56,7 @@ class Home extends BaseController
                 'username'   => $ketua->nama_penuh,
                 'role'       => 'ketua'
             ]);
+            $ketuaModel->update($ketua->id, ['last_login' => date('Y-m-d H:i:s')]);
             return redirect()->to('ketua');
         }
 
@@ -74,6 +78,7 @@ class Home extends BaseController
                 'username'   => $pengguna->nama_penuh,
                 'role'       => $pengguna->role
             ]);
+            $penggunaModel->update($pengguna->id, ['last_login' => date('Y-m-d H:i:s')]);
             return redirect()->to($pengguna->role);
         }
 

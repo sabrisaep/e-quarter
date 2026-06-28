@@ -40,8 +40,8 @@
                         <h5 class="font-weight-bold">Syarat Kata Laluan:</h5>
                         <ul class="small text-muted">
                             <li>Minimum 8 aksara.</li>
-                            <li>Mestilah berbeza dengan kata laluan lama.</li>
-                            <li>Pastikan pengesahan kata laluan adalah sama.</li>
+                            <li>Kata laluan baru mestilah berbeza dengan kata laluan lama.</li>
+                            <li>Pastikan pengesahan kata laluan adalah sama dengan kata laluan baru.</li>
                             <li>Mestilah menggunakan kombinasi huruf dan nombor untuk keselamatan optimum.</li>
                         </ul>
                     </div>

@@ -51,12 +51,23 @@ $routes->group('admin', ['filter' => 'adminauth'], function ($routes) {
 
 $routes->group('kerani', ['filter' => 'keraniauth'], function ($routes) {
     $routes->get('/', [Kerani::class, 'index']);
+    $routes->get('sukuan', [Kerani::class, 'sukuan']);
+    $routes->get('subsidiari', [Kerani::class, 'subsidiari']);
+    $routes->get('profil', [Kerani::class, 'profil']);
 });
 
 $routes->group('ketua', ['filter' => 'ketuaauth'], function ($routes) {
     $routes->get('/', [Ketua::class, 'index']);
+    $routes->get('kategori', [Ketua::class, 'kategori']);
+    $routes->get('sukuan', [Ketua::class, 'sukuan']);
+    $routes->get('nota_minta', [Ketua::class, 'nota_minta']);
+    $routes->get('profil', [Ketua::class, 'profil']);
 });
 
 $routes->group('pengurusan', ['filter' => 'pengurusanauth'], function ($routes) {
     $routes->get('/', [Pengurusan::class, 'index']);
+    $routes->get('perbelanjaan', [Pengurusan::class, 'perbelanjaan']);
+    $routes->get('subsidiari', [Pengurusan::class, 'subsidiari']);
+    $routes->get('analisis', [Pengurusan::class, 'analisis']);
+    $routes->get('profil', [Pengurusan::class, 'profil']);
 });

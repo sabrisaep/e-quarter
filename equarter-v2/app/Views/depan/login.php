@@ -91,7 +91,7 @@
                             <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
                         </div>
                         <div class="card-footer text-muted small">
-                            Pembangunan belum bermula
+                            Pembangunan sedang berjalan
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                             <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
                         </div>
                         <div class="card-footer text-muted small">
-                            Pembangunan belum bermula
+                            Pembangunan akan bermula
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                             <p class="card-text small">Modul ini sedang dalam perancangan. Struktur asas dan keperluan fungsi sedang dikenal pasti.</p>
                         </div>
                         <div class="card-footer text-muted small">
-                            Pembangunan belum bermula
+                            Pembangunan akan bermula
                         </div>
                     </div>
                 </div>

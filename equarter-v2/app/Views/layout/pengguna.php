@@ -61,6 +61,23 @@ $role = session()->get('role');
                         <a class="nav-link link-primary text-secondary <?= url_is("ketua/profil*") ? 'active fw-bold' : '' ?>"
                            href="<?= base_url("ketua/profil") ?>">Profil</a>
                     </li>
+                <?php elseif ($role == 'pengurusan'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link link-primary text-secondary <?= url_is("pengurusan/perbelanjaan*") ? 'active fw-bold' : '' ?>"
+                           href="<?= base_url("pengurusan/perbelanjaan") ?>">Perbelanjaan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-primary text-secondary <?= url_is("pengurusan/subsidiari*") ? 'active fw-bold' : '' ?>"
+                           href="<?= base_url("pengurusan/subsidiari") ?>">Subsidiari</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-primary text-secondary <?= url_is("pengurusan/analisis*") ? 'active fw-bold' : '' ?>"
+                           href="<?= base_url("pengurusan/analisis") ?>">Analisis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-primary text-secondary <?= url_is("pengurusan/profil*") ? 'active fw-bold' : '' ?>"
+                           href="<?= base_url("pengurusan/profil") ?>">Profil</a>
+                    </li>
                 <?php endif; ?>
 
                 <li class="nav-item">
@@ -128,5 +145,32 @@ $role = session()->get('role');
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <?= $this->renderSection('script') ?>
+
+<?php if (isset($mesej) && $mesej): ?>
+    <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+        <div id="liveToast" class="toast show border-0 shadow-lg" role="alert" aria-live="assertive"
+             aria-atomic="true">
+            <div class="toast-header <?= esc($mesej['warna']) ?> text-white">
+                <strong class="me-auto">
+                    <i class="fas fa-info-circle me-2"></i><?= esc($mesej['tajuk']) ?>
+                </strong>
+                <small class="text-white"><?= date('h:i a') ?></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <?= esc($mesej['isi']) ?>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.map(function (toastEl) {
+                new bootstrap.Toast(toastEl).show()
+            });
+        });
+    </script>
+<?php endif; ?>
+
 </body>
 </html>

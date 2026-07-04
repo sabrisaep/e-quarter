@@ -51,6 +51,6 @@ class Ketua extends BaseController
             'mesej' => session()->getFlashdata('mesej'),
             'pengguna' => $this->pengguna(),
         ];
-        return view('ketua/profil', $data);
+        return view('pengguna/profil', $data);
     }
 }

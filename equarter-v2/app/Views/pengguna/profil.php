@@ -4,7 +4,6 @@
 /**
  * @var object $pengguna
  */
-$role = session()->get('role');
 ?>
 
 <h1 class="text-primary">Profil Saya</h1>
@@ -19,7 +18,7 @@ $role = session()->get('role');
                 <p><strong>Nama Penuh:</strong><br><?= esc($pengguna->nama_penuh) ?></p>
                 <p><strong>Email:</strong><br><?= esc($pengguna->email) ?></p>
                 <p><strong>No. KP:</strong><br><?= esc($pengguna->no_kp) ?></p>
-                <p><strong>Peranan:</strong><br><?= PENGGUNA[esc($role)] ?></p>
+                <p><strong>Peranan:</strong><br><?= PENGGUNA[esc(session()->get('role'))] ?></p>
             </div>
         </div>
     </div>
@@ -30,8 +29,10 @@ $role = session()->get('role');
                 <h5 class="card-title mb-0">Kemaskini Profil</h5>
             </div>
             <div class="card-body">
-                <form action="<?= base_url('ketua/profil/kemaskini') ?>" method="post">
+                <form action="<?= base_url('pengguna/kemaskini') ?>" method="post">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="role" value="<?= session()->get('role') ?>">
+                    <input type="hidden" name="id" value="<?= session()->get('id') ?>">
                     <div class="mb-3">
                         <label for="nama_penuh" class="form-label">Nama Penuh</label>
                         <input type="text" name="nama_penuh" id="nama_penuh" class="form-control"
@@ -57,8 +58,10 @@ $role = session()->get('role');
                 <h5 class="card-title mb-0">Tukar Kata Laluan</h5>
             </div>
             <div class="card-body">
-                <form id="formTukarPassword" action="<?= base_url('ketua/profil/tukar-password') ?>" method="post">
+                <form id="formTukarPassword" action="<?= base_url('pengguna/tukar-password') ?>" method="post">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="role" value="<?= session()->get('role') ?>">
+                    <input type="hidden" name="id" value="<?= session()->get('id') ?>">
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Kata Laluan Semasa</label>
                         <input type="password" name="current_password" id="current_password" class="form-control"

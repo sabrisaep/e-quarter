@@ -41,6 +41,6 @@ class Kerani extends BaseController
             'mesej' => session()->getFlashdata('mesej'),
             'pengguna' => $this->pengguna(),
         ];
-        return view('kerani/profil', $data);
+        return view('pengguna/profil', $data);
     }
 }

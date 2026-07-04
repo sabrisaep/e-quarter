@@ -53,8 +53,8 @@
 <?php if (!empty($jabatan) && is_array($jabatan)): ?>
     <?php foreach ($jabatan as $j): ?>
         <div class="card mt-4">
-            <div class="card-header">
-                <h4 class="mb-0 text-dark"><?= esc($j->nama_jabatan); ?></h4>
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><?= esc($j->nama_jabatan); ?></h4>
             </div>
             <div class="card-body">
                 <h5 class="mb-3">Senarai Ketua Program / Jabatan Aktif</h5>

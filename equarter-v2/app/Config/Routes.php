@@ -4,6 +4,7 @@ use App\Controllers\Admin;
 use App\Controllers\Home;
 use App\Controllers\Kerani;
 use App\Controllers\Ketua;
+use App\Controllers\Pengguna;
 use App\Controllers\Pengurusan;
 use CodeIgniter\Router\RouteCollection;
 
@@ -70,4 +71,9 @@ $routes->group('pengurusan', ['filter' => 'pengurusanauth'], function ($routes) 
     $routes->get('subsidiari', [Pengurusan::class, 'subsidiari']);
     $routes->get('analisis', [Pengurusan::class, 'analisis']);
     $routes->get('profil', [Pengurusan::class, 'profil']);
+});
+
+$routes->group('', ['filter' => 'penggunaauth'], function ($routes) {
+    $routes->post('/pengguna/kemaskini', [Pengguna::class, 'kemaskini']);
+    $routes->post('/pengguna/tukar-password', [Pengguna::class, 'tukarPassword']);
 });

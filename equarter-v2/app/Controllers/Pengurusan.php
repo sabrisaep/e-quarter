@@ -51,6 +51,6 @@ class Pengurusan extends BaseController
             'mesej' => session()->get('mesej'),
             'pengguna' => $this->pengguna(),
         ];
-        return view('pengurusan/profil', $data);
+        return view('pengguna/profil', $data);
     }
 }
